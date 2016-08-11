@@ -14,32 +14,37 @@ $ npm install --save alfy-test
 
 ```js
 import test from 'ava';
-import fn from 'alfy-test';
+import alfyTest from 'alfy-test';
 
 test(() => {
-	const result = await fn('workflow input');
+	const result = await alfyTest('workflow input');
 
-	t.deepEqual(result, {
-		items: [
-			{
-				title: 'foo',
-				subtitle: 'bar'
-			}
-		]
-	});
+	t.deepEqual(result, [
+		{
+			title: 'foo',
+			subtitle: 'bar'
+		}
+	]);
 });
 ```
 
 
 ## API
 
-### alfy(...input)
+### alfyTest(...input)
+
+Returns a `Promise` that returns the `items` of the workflow.
 
 #### input
 
 Type: `string[]`
 
 Workflow input.
+
+
+## Examples
+
+- [alfred-ng2](https://github.com/SamVerschueren/alfred-ng2) - Search for Angular 2 API references
 
 
 ## License

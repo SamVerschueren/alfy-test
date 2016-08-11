@@ -32,6 +32,7 @@ module.exports = function () {
 				env: env(info)
 			};
 
-			return execa.stdout('run-node', [file].concat(input), options).then(res => JSON.parse(res));
+			return execa.stdout('run-node', [file].concat(input), options)
+				.then(res => JSON.parse(res).items);
 		});
 };
