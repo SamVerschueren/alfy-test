@@ -10,18 +10,8 @@ const mainFile = require('./lib/main-file');
 
 const fsP = pify(fs);
 
-const toArray = args => {
-	const ret = [];
-
-	for (let i = 0; i < args.length; i++) {
-		ret.push(args[i]);
-	}
-
-	return ret;
-};
-
 module.exports = function () {
-	const input = toArray(arguments);
+	const input = Array.from(arguments);
 
 	let dir;
 
