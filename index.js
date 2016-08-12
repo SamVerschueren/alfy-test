@@ -12,6 +12,11 @@ const fsP = pify(fs);
 
 module.exports = function () {
 	const input = Array.from(arguments);
+	let options = {};
+
+	if (typeof input[input.length - 1] === 'object') {
+		options = input.pop();
+	}
 
 	let dir;
 
@@ -28,11 +33,11 @@ module.exports = function () {
 			let file = path.join(dir, mainFile(info));
 			file = path.relative(process.cwd(), file);
 
-			const options = {
-				env: env(info)
+			const opts = {
+				env: env(info, options)
 			};
 
-			return execa.stdout('run-node', [file].concat(input), options)
+			return execa.stdout('run-node', [file].concat(input), opts)
 				.then(res => JSON.parse(res).items);
 		});
 };

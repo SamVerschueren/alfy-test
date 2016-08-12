@@ -31,7 +31,7 @@ test(() => {
 
 ## API
 
-### alfyTest(...input)
+### alfyTest(...input, [options])
 
 Returns a `Promise` that returns the `items` of the workflow.
 
@@ -40,6 +40,43 @@ Returns a `Promise` that returns the `items` of the workflow.
 Type: `string[]`
 
 Workflow input.
+
+### options
+
+#### version
+
+Type: `string`<br>
+Default: `3.0.3`
+
+Alfred version.
+
+#### theme
+
+Type: `string`<br>
+Default: `theme.urlimport.153A3C58-B2D9-4F08-B342-B0BF7F6E8DE9`
+
+Alfred theme.
+
+#### theme_background
+
+Type: `string`<br>
+Default: `rgba(252,254,255,0.85)`
+
+Background color.
+
+#### theme_selection
+
+Type: `string`<br>
+Default: `rgba(255,255,255,0.26)`
+
+Background color of a selected item.
+
+#### theme_subtext
+
+Type: `string`<br>
+Default: `1`
+
+Show the item subtitle.
 
 
 ## Examples
