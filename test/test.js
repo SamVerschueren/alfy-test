@@ -11,7 +11,9 @@ test.afterEach(() => {
 test('result', async t => {
 	process.chdir('./fixtures/default');
 
-	t.deepEqual(await fn('bar'), [
+	const alfyTest = fn();
+
+	t.deepEqual(await alfyTest('bar'), [
 		{
 			title: 'Foo',
 			subtitle: 'bar'
@@ -22,7 +24,9 @@ test('result', async t => {
 test('different filename', async t => {
 	process.chdir('./fixtures/main');
 
-	t.deepEqual(await fn('bar'), [
+	const alfyTest = fn();
+
+	t.deepEqual(await alfyTest('bar'), [
 		{
 			title: 'Foo',
 			subtitle: 'bar'
@@ -30,16 +34,33 @@ test('different filename', async t => {
 	]);
 });
 
+test('cache', async t => {
+	process.chdir('./fixtures/cache');
+
+	const alfyTest = fn();
+
+	t.deepEqual(await alfyTest('foo'), [
+		{
+			title: 'foo',
+			subtitle: 'bar'
+		}
+	]);
+
+	t.is(alfyTest.config.get('foo'), 'bar');
+});
+
 test('environment variables', async t => {
 	process.chdir('./fixtures/default');
 
-	const ret = await fn('Bar', '--env', {
+	const alfyTest = fn({
 		version: '2.0.0',
 		theme: 'foobar',
 		theme_background: 'rgba(0,0,0,1)',
 		theme_selection: 'rgba(255,255,255,1)',
 		theme_subtext: '0'
 	});
+
+	const ret = await alfyTest('Bar', '--env');
 
 	t.deepEqual(ret[0], {
 		title: 'Foo',

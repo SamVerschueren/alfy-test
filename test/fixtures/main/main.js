@@ -1,11 +1,9 @@
 'use strict';
-const result = {
-	items: [
-		{
-			title: 'Foo',
-			subtitle: process.argv[2]
-		}
-	]
-};
+const alfy = require('alfy');
 
-console.log(JSON.stringify(result));
+alfy.output([
+	{
+		title: 'Foo',
+		subtitle: alfy.input
+	}
+]);

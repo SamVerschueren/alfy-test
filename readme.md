@@ -16,8 +16,10 @@ $ npm install --save alfy-test
 import test from 'ava';
 import alfyTest from 'alfy-test';
 
-test(() => {
-	const result = await alfyTest('workflow input');
+test(async t => {
+	const alfy = alfyTest();
+
+	const result = await alfy('workflow input');
 
 	t.deepEqual(result, [
 		{
@@ -31,15 +33,9 @@ test(() => {
 
 ## API
 
-### alfyTest(...input, [options])
+### alfyTest([options])
 
-Returns a `Promise` that returns the `items` of the workflow.
-
-#### input
-
-Type: `string[]`
-
-Workflow input.
+Returns an [alfy](#alfyinput) instance.
 
 ### options
 
@@ -77,6 +73,24 @@ Type: `string`<br>
 Default: `1`
 
 Show the item subtitle.
+
+### alfy(...input)
+
+Returns a `Promise` that returns the `items` of the workflow.
+
+#### input
+
+Type: `string[]`
+
+Workflow input.
+
+#### .config
+
+The [alfy config](https://github.com/sindresorhus/alfy#config) instance.
+
+#### .cache
+
+The [alfy cache](https://github.com/sindresorhus/alfy#cache) instance.
 
 
 ## Examples
