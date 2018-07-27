@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import test from 'ava';
+import {AlfyTestError} from '../lib/error';
 import fn from '..';
 
 const dir = process.cwd();
@@ -87,4 +88,12 @@ test('environment variables', async t => {
 			alfred_theme: 'foobar'
 		}
 	});
+});
+
+test('non-json result', async t => {
+	process.chdir('test/fixtures/non-json');
+
+	const alfyTest = fn();
+
+	await t.throwsAsync(alfyTest('bar'), AlfyTestError);
 });

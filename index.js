@@ -10,6 +10,7 @@ const tempfile = require('tempfile');
 const Conf = require('conf');
 const CacheConf = require('cache-conf');
 const env = require('./lib/env');
+const {AlfyTestError} = require('./lib/error');
 const mainFile = require('./lib/main-file');
 
 const fsP = pify(fs);
@@ -39,7 +40,13 @@ module.exports = options => {
 				file = path.relative(process.cwd(), file);
 
 				return execa.stdout('run-node', [file].concat(input), {env: env(info, opts)})
-					.then(res => JSON.parse(res).items);
+					.then(res => {
+						try {
+							return JSON.parse(res).items;
+						} catch (err) {
+							throw new AlfyTestError('Could not parse result as JSON', res);
+						}
+					});
 			});
 	};
 
