@@ -8,6 +8,7 @@ const pify = require('pify');
 const plist = require('plist');
 const tempfile = require('tempfile');
 const Conf = require('conf');
+const CacheConf = require('cache-conf');
 const env = require('./lib/env');
 const mainFile = require('./lib/main-file');
 
@@ -46,7 +47,7 @@ module.exports = options => {
 		cwd: opts.workflow_data
 	});
 
-	alfyTest.cache = new Conf({
+	alfyTest.cache = new CacheConf({
 		configName: 'cache',
 		cwd: opts.workflow_cache
 	});
