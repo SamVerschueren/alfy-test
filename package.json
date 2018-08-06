@@ -1,65 +1,62 @@
 {
-  "name": "alfy-test",
-  "version": "0.3.0",
-  "description": "Test your Alfy workflows",
-  "license": "MIT",
-  "repository": "SamVerschueren/alfy-test",
-  "author": {
-    "name": "Sam Verschueren",
-    "email": "sam.verschueren@gmail.com",
-    "url": "github.com/SamVerschueren"
-  },
-  "maintainers": [
-    {
-      "name": "Sindre Sorhus",
-      "email": "sindresorhus@gmail.com",
-      "url": "sindresorhus.com"
-    }
-  ],
-  "engines": {
-    "node": ">=4"
-  },
-  "scripts": {
-    "test": "clinton && xo && ava"
-  },
-  "files": [
-    "index.js",
-    "lib"
-  ],
-  "keywords": [
-    "alfred",
-    "app",
-    "workflow",
-    "helper",
-    "util",
-    "utility",
-    "macos",
-    "mac",
-    "osx",
-    "test",
-    "testing",
-    "alfy"
-  ],
-  "dependencies": {
-    "cache-conf": "^0.3.0",
-    "conf": "^0.11.2",
-    "execa": "^0.4.0",
-    "find-up": "^1.1.2",
-    "pify": "^2.3.0",
-    "plist": "^1.2.0",
-    "run-node": "^0.1.1",
-    "tempfile": "^1.1.1"
-  },
-  "devDependencies": {
-    "alfy": "^0.3.0",
-    "ava": "*",
-    "clinton": "*",
-    "xo": "*"
-  },
-  "xo": {
-    "esnext": true
-  },
-  "ava": {
-    "serial": true
-  }
+	"name": "alfy-test",
+	"version": "0.3.0",
+	"description": "Test your Alfy workflows",
+	"license": "MIT",
+	"repository": "SamVerschueren/alfy-test",
+	"author": {
+		"name": "Sam Verschueren",
+		"email": "sam.verschueren@gmail.com",
+		"url": "github.com/SamVerschueren"
+	},
+	"maintainers": [
+		{
+			"name": "Sindre Sorhus",
+			"email": "sindresorhus@gmail.com",
+			"url": "sindresorhus.com"
+		}
+	],
+	"engines": {
+		"node": ">=4"
+	},
+	"scripts": {
+		"test": "clinton && xo && ava"
+	},
+	"files": [
+		"index.js",
+		"lib"
+	],
+	"keywords": [
+		"alfred",
+		"app",
+		"workflow",
+		"helper",
+		"util",
+		"utility",
+		"macos",
+		"mac",
+		"osx",
+		"test",
+		"testing",
+		"alfy"
+	],
+	"dependencies": {
+		"cache-conf": "^0.3.0",
+		"conf": "^0.11.2",
+		"execa": "^0.4.0",
+		"find-up": "^1.1.2",
+		"pify": "^2.3.0",
+		"plist": "^1.2.0",
+		"run-node": "^0.1.1",
+		"tempfile": "^1.1.1"
+	},
+	"devDependencies": {
+		"alfy": "^0.3.0",
+		"ava": "*",
+		"clinton": "*",
+		"xo": "^0.20.3"
+	},
+	"ava": {
+		"serial": true
+	}
 }

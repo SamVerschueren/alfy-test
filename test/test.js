@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import test from 'ava';
-import fn from '../';
+import fn from '..';
 
 const dir = process.cwd();
 
@@ -9,7 +9,7 @@ test.afterEach(() => {
 });
 
 test('result', async t => {
-	process.chdir('./fixtures/default');
+	process.chdir('test/fixtures/default');
 
 	const alfyTest = fn();
 
@@ -22,7 +22,7 @@ test('result', async t => {
 });
 
 test('different filename', async t => {
-	process.chdir('./fixtures/main');
+	process.chdir('test/fixtures/main');
 
 	const alfyTest = fn();
 
@@ -35,7 +35,7 @@ test('different filename', async t => {
 });
 
 test('cache', async t => {
-	process.chdir('./fixtures/cache');
+	process.chdir('test/fixtures/cache');
 
 	const alfyTest = fn();
 
@@ -50,7 +50,7 @@ test('cache', async t => {
 });
 
 test('environment variables', async t => {
-	process.chdir('./fixtures/default');
+	process.chdir('test/fixtures/default');
 
 	const alfyTest = fn({
 		version: '2.0.0',
