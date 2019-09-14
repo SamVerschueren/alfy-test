@@ -3,7 +3,7 @@
 	"version": "0.4.0",
 	"description": "Test your Alfy workflows",
 	"license": "MIT",
-	"repository": "SamVerschueren/alfy-test",
+	"repository": "git://github.com/salockhart/alfy-test.git",
 	"author": {
 		"name": "Sam Verschueren",
 		"email": "sam.verschueren@gmail.com",
