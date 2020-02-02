@@ -1,10 +1,9 @@
 /* eslint-disable camelcase */
 'use strict';
-const fs = require('fs');
+const {promises: fs} = require('fs');
 const path = require('path');
 const execa = require('execa');
 const findUp = require('find-up');
-const pify = require('pify');
 const plist = require('plist');
 const tempfile = require('tempfile');
 const Conf = require('conf');
@@ -13,50 +12,42 @@ const env = require('./lib/env');
 const {AlfyTestError} = require('./lib/error');
 const mainFile = require('./lib/main-file');
 
-const fsP = pify(fs);
-
 module.exports = options => {
-	const opts = Object.assign({}, options, {
+	options = {
+		...options,
 		workflow_data: tempfile(),
 		workflow_cache: tempfile()
-	});
+	};
 
-	const alfyTest = function () {
-		const input = Array.from(arguments);
+	const alfyTest = async (...input) => {
+		const filePath = await findUp('info.plist');
+		const directory = path.dirname(filePath);
+		const info = plist.parse(await fs.readFile(filePath, 'utf8'));
 
-		let dir;
+		// Detect executable file
+		let file = path.join(directory, mainFile(info));
+		file = path.relative(process.cwd(), file);
 
-		return findUp('info.plist')
-			.then(filePath => {
-				dir = path.dirname(filePath);
+		const {stdout} = await execa('run-node', [file, ...input], {
+			env: env(info, options),
+			preferLocal: true,
+			localDir: __dirname
+		});
 
-				return fsP.readFile(filePath, 'utf8');
-			})
-			.then(info => {
-				info = plist.parse(info);
-
-				// Detect executable file
-				let file = path.join(dir, mainFile(info));
-				file = path.relative(process.cwd(), file);
-
-				return execa.stdout('run-node', [file].concat(input), {env: env(info, opts)})
-					.then(res => {
-						try {
-							return JSON.parse(res).items;
-						} catch (err) {
-							throw new AlfyTestError('Could not parse result as JSON', res);
-						}
-					});
-			});
+		try {
+			return JSON.parse(stdout).items;
+		} catch (_) {
+			throw new AlfyTestError('Could not parse result as JSON', stdout);
+		}
 	};
 
 	alfyTest.config = new Conf({
-		cwd: opts.workflow_data
+		cwd: options.workflow_data
 	});
 
 	alfyTest.cache = new CacheConf({
 		configName: 'cache',
-		cwd: opts.workflow_cache
+		cwd: options.workflow_cache
 	});
 
 	return alfyTest;

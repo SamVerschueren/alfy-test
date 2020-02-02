@@ -1,18 +1,18 @@
 /* eslint-disable camelcase */
 import test from 'ava';
 import {AlfyTestError} from '../lib/error';
-import fn from '..';
+import makeAlfyTest from '..';
 
-const dir = process.cwd();
+const directory = process.cwd();
 
 test.afterEach(() => {
-	process.chdir(dir);
+	process.chdir(directory);
 });
 
 test('result', async t => {
 	process.chdir('test/fixtures/default');
 
-	const alfyTest = fn();
+	const alfyTest = makeAlfyTest();
 
 	t.deepEqual(await alfyTest('bar'), [
 		{
@@ -25,7 +25,7 @@ test('result', async t => {
 test('different filename', async t => {
 	process.chdir('test/fixtures/main');
 
-	const alfyTest = fn();
+	const alfyTest = makeAlfyTest();
 
 	t.deepEqual(await alfyTest('bar'), [
 		{
@@ -38,7 +38,7 @@ test('different filename', async t => {
 test('cache', async t => {
 	process.chdir('test/fixtures/cache');
 
-	const alfyTest = fn();
+	const alfyTest = makeAlfyTest();
 
 	t.deepEqual(await alfyTest('foo'), [
 		{
@@ -53,7 +53,7 @@ test('cache', async t => {
 test('environment variables', async t => {
 	process.chdir('test/fixtures/default');
 
-	const alfyTest = fn({
+	const alfyTest = makeAlfyTest({
 		version: '2.0.0',
 		theme: 'foobar',
 		theme_background: 'rgba(0,0,0,1)',
@@ -93,7 +93,7 @@ test('environment variables', async t => {
 test('non-json result', async t => {
 	process.chdir('test/fixtures/non-json');
 
-	const alfyTest = fn();
+	const alfyTest = makeAlfyTest();
 
 	await t.throwsAsync(alfyTest('bar'), AlfyTestError);
 });

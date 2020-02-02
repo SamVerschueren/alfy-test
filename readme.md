@@ -2,13 +2,11 @@
 
 > Test your [Alfy](https://github.com/sindresorhus/alfy) workflows
 
-
 ## Install
 
 ```
-$ npm install --save alfy-test
+$ npm install alfy-test
 ```
-
 
 ## Usage
 
@@ -16,7 +14,7 @@ $ npm install --save alfy-test
 import test from 'ava';
 import alfyTest from 'alfy-test';
 
-test(async t => {
+test('foo', async t => {
 	const alfy = alfyTest();
 
 	const result = await alfy('workflow input');
@@ -30,47 +28,48 @@ test(async t => {
 });
 ```
 
-
 ## API
 
-### alfyTest([options])
+### alfyTest(options?)
 
 Returns an [alfy](#alfyinput) instance.
 
 ### options
 
+Type: `object`
+
 #### version
 
-Type: `string`<br>
-Default: `3.0.3`
+Type: `string`\
+Default: `'3.0.3'`
 
 Alfred version.
 
 #### theme
 
 Type: `string`<br>
-Default: `theme.urlimport.153A3C58-B2D9-4F08-B342-B0BF7F6E8DE9`
+Default: `'theme.urlimport.153A3C58-B2D9-4F08-B342-B0BF7F6E8DE9'`
 
 Alfred theme.
 
 #### theme_background
 
 Type: `string`<br>
-Default: `rgba(252,254,255,0.85)`
+Default: `'rgba(252,254,255,0.85)'`
 
 Background color.
 
 #### theme_selection
 
 Type: `string`<br>
-Default: `rgba(255,255,255,0.26)`
+Default: `'rgba(255,255,255,0.26)'`
 
 Background color of a selected item.
 
 #### theme_subtext
 
 Type: `string`<br>
-Default: `1`
+Default: `'1'`
 
 Show the item subtitle.
 
@@ -92,12 +91,6 @@ The [alfy config](https://github.com/sindresorhus/alfy#config) instance.
 
 The [alfy cache](https://github.com/sindresorhus/alfy#cache) instance.
 
-
 ## Examples
 
 - [alfred-ng2](https://github.com/SamVerschueren/alfred-ng2) - Search for Angular 2 API references
-
-
-## License
-
-MIT © [Sam Verschueren](https://github.com/SamVerschueren)
