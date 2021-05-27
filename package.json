@@ -23,7 +23,7 @@
 		"node": ">=10"
 	},
 	"scripts": {
-	  "test": "xo && ava"
+		"test": "xo && ava"
 	},
 	"files": [
 		"index.js",
