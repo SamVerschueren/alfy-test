@@ -9,6 +9,9 @@
 		"email": "sam.verschueren@gmail.com",
 		"url": "github.com/SamVerschueren"
 	},
+	"bin": {
+		"run-node": "run-node.sh"
+	},
 	"maintainers": [
 		{
 			"name": "Sindre Sorhus",
@@ -45,7 +48,6 @@
 		"execa": "^4.0.0",
 		"find-up": "^4.1.0",
 		"plist": "^3.0.1",
-		"run-node": "^1.0.0",
 		"tempfile": "^3.0.0"
 	},
 	"devDependencies": {
