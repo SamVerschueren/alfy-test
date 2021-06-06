@@ -1,4 +1,4 @@
-# alfy-test [![Build Status](https://travis-ci.org/SamVerschueren/alfy-test.svg?branch=master)](https://travis-ci.org/SamVerschueren/alfy-test)
+# alfy-test ![CI](https://github.com/SamVerschueren/alfy-test/workflows/CI/badge.svg)
 
 > Test your [Alfy](https://github.com/sindresorhus/alfy) workflows
 

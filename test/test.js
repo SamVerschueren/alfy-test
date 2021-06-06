@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import test from 'ava';
-import {AlfyTestError} from '../lib/error';
-import makeAlfyTest from '..';
+const test = require('ava');
+const {AlfyTestError} = require('../lib/error');
+const makeAlfyTest = require('..');
 
 const directory = process.cwd();
 
@@ -95,5 +95,8 @@ test('non-json result', async t => {
 
 	const alfyTest = makeAlfyTest();
 
-	await t.throwsAsync(alfyTest('bar'), AlfyTestError);
+	await t.throwsAsync(alfyTest('bar'), {
+		instanceOf: AlfyTestError,
+		message: 'Could not parse result as JSON'
+	});
 });
