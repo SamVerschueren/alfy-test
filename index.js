@@ -1,28 +1,34 @@
 /* eslint-disable camelcase */
 'use strict';
-const {promises: fs} = require('fs');
+const fs = require('fs');
 const path = require('path');
 const execa = require('execa');
 const findUp = require('find-up');
 const plist = require('plist');
-const tempfile = require('tempfile');
+const tempy = require('tempy');
 const Conf = require('conf');
 const CacheConf = require('cache-conf');
 const env = require('./lib/env');
 const {AlfyTestError} = require('./lib/error');
 const mainFile = require('./lib/main-file');
 
+const fsP = fs.promises;
+
 module.exports = options => {
 	options = {
 		...options,
-		workflow_data: tempfile(),
-		workflow_cache: tempfile()
+		workflow_data: tempy.directory(),
+		workflow_cache: tempy.directory()
 	};
+
+	if (options.userConfig) {
+		fs.writeFileSync(path.join(options.workflow_data, 'user-config.json'), JSON.stringify(options.userConfig), 'utf8');
+	}
 
 	const alfyTest = async (...input) => {
 		const filePath = await findUp('info.plist');
 		const directory = path.dirname(filePath);
-		const info = plist.parse(await fs.readFile(filePath, 'utf8'));
+		const info = plist.parse(await fsP.readFile(filePath, 'utf8'));
 
 		// Detect executable file
 		let file = path.join(directory, mainFile(info));

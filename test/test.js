@@ -100,3 +100,31 @@ test('non-json result', async t => {
 		message: 'Could not parse result as JSON'
 	});
 });
+
+test('user config', async t => {
+	process.chdir('test/fixtures/user-config');
+
+	const helloAlfyTest = makeAlfyTest({
+		userConfig: {
+			title: 'hello'
+		}
+	});
+
+	t.deepEqual(await helloAlfyTest('foo'), [
+		{
+			title: 'hello'
+		}
+	]);
+
+	const worldAlfyTest = makeAlfyTest({
+		userConfig: {
+			title: 'world'
+		}
+	});
+
+	t.deepEqual(await worldAlfyTest('foo'), [
+		{
+			title: 'world'
+		}
+	]);
+});

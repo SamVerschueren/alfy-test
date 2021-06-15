@@ -38,6 +38,12 @@ Returns an [alfy](#alfyinput) instance.
 
 Type: `object`
 
+#### userConfig
+
+Type: `object`
+
+A JSON object representing the user configuration.
+
 #### version
 
 Type: `string`\
