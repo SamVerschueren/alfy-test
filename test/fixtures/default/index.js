@@ -1,18 +1,18 @@
-'use strict';
+import process from 'node:process';
 
 const result = {
 	items: [
 		{
 			title: 'Foo',
-			subtitle: process.argv[2]
-		}
-	]
+			subtitle: process.argv[2],
+		},
+	],
 };
 
 if (process.argv[3] === '--env') {
 	const item = {
 		title: 'Env',
-		env: {}
+		env: {},
 	};
 
 	for (const env of Object.keys(process.env)) {

@@ -1,9 +1,8 @@
-'use strict';
-const alfy = require('alfy');
+import alfy from 'alfy';
 
 alfy.output([
 	{
 		title: 'Foo',
-		subtitle: alfy.input
-	}
+		subtitle: alfy.input,
+	},
 ]);

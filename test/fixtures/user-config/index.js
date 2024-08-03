@@ -1,8 +1,7 @@
-'use strict';
-const alfy = require('alfy');
+import alfy from 'alfy';
 
 alfy.output([
 	{
-		title: alfy.userConfig.get('title')
-	}
+		title: alfy.userConfig.get('title'),
+	},
 ]);

@@ -1,34 +1,38 @@
-/* eslint-disable camelcase */
-'use strict';
-const fs = require('fs');
-const path = require('path');
-const execa = require('execa');
-const findUp = require('find-up');
-const plist = require('plist');
-const tempy = require('tempy');
-const Conf = require('conf');
-const CacheConf = require('cache-conf');
-const env = require('./lib/env');
-const {AlfyTestError} = require('./lib/error');
-const mainFile = require('./lib/main-file');
+/* eslint-disable camelcase, import/no-anonymous-default-export, unicorn/no-anonymous-default-export */
+import process from 'node:process';
+import fs from 'node:fs';
+import path from 'node:path';
+import execa from 'execa';
+import findUp from 'find-up';
+import {parse} from 'plist';
+import * as tempy from 'tempy';
+import Conf from 'conf';
+import CacheConf from 'cache-conf';
+import env from './lib/env.js';
+import {AlfyTestError} from './lib/error.js';
+import mainFile from './lib/main-file.js';
 
-const fsP = fs.promises;
+const __dirname = import.meta.dirname;
 
-module.exports = options => {
+export default options => {
 	options = {
 		...options,
 		workflow_data: tempy.directory(),
-		workflow_cache: tempy.directory()
+		workflow_cache: tempy.directory(),
 	};
 
 	if (options.userConfig) {
-		fs.writeFileSync(path.join(options.workflow_data, 'user-config.json'), JSON.stringify(options.userConfig), 'utf8');
+		fs.writeFileSync(
+			path.join(options.workflow_data, 'user-config.json'),
+			JSON.stringify(options.userConfig),
+			'utf8',
+		);
 	}
 
 	const alfyTest = async (...input) => {
 		const filePath = await findUp('info.plist');
 		const directory = path.dirname(filePath);
-		const info = plist.parse(await fsP.readFile(filePath, 'utf8'));
+		const info = parse(await fs.promises.readFile(filePath, 'utf8'));
 
 		// Detect executable file
 		let file = path.join(directory, mainFile(info));
@@ -37,23 +41,23 @@ module.exports = options => {
 		const {stdout} = await execa('run-node', [file, ...input], {
 			env: env(info, options),
 			preferLocal: true,
-			localDir: __dirname
+			localDir: __dirname,
 		});
 
 		try {
 			return JSON.parse(stdout).items;
-		} catch (_) {
+		} catch {
 			throw new AlfyTestError('Could not parse result as JSON', stdout);
 		}
 	};
 
 	alfyTest.config = new Conf({
-		cwd: options.workflow_data
+		cwd: options.workflow_data,
 	});
 
 	alfyTest.cache = new CacheConf({
 		configName: 'cache',
-		cwd: options.workflow_cache
+		cwd: options.workflow_cache,
 	});
 
 	return alfyTest;

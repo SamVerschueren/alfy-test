@@ -1,11 +1,12 @@
 /* eslint-disable camelcase */
-const test = require('ava');
-const {AlfyTestError} = require('../lib/error');
-const makeAlfyTest = require('..');
+import process from 'node:process';
+import test, {afterEach} from 'ava';
+import {AlfyTestError} from '../lib/error.js';
+import makeAlfyTest from '../index.js';
 
 const directory = process.cwd();
 
-test.afterEach(() => {
+afterEach(() => {
 	process.chdir(directory);
 });
 
@@ -17,8 +18,8 @@ test('result', async t => {
 	t.deepEqual(await alfyTest('bar'), [
 		{
 			title: 'Foo',
-			subtitle: 'bar'
-		}
+			subtitle: 'bar',
+		},
 	]);
 });
 
@@ -30,8 +31,8 @@ test('different filename', async t => {
 	t.deepEqual(await alfyTest('bar'), [
 		{
 			title: 'Foo',
-			subtitle: 'bar'
-		}
+			subtitle: 'bar',
+		},
 	]);
 });
 
@@ -43,8 +44,8 @@ test('cache', async t => {
 	t.deepEqual(await alfyTest('foo'), [
 		{
 			title: 'foo',
-			subtitle: 'bar'
-		}
+			subtitle: 'bar',
+		},
 	]);
 
 	t.is(alfyTest.config.get('foo'), 'bar');
@@ -58,20 +59,20 @@ test('environment variables', async t => {
 		theme: 'foobar',
 		theme_background: 'rgba(0,0,0,1)',
 		theme_selection: 'rgba(255,255,255,1)',
-		theme_subtext: '0'
+		theme_subtext: '0',
 	});
 
-	const ret = await alfyTest('Bar', '--env');
+	const returnValue = await alfyTest('Bar', '--env');
 
-	t.deepEqual(ret[0], {
+	t.deepEqual(returnValue[0], {
 		title: 'Foo',
-		subtitle: 'Bar'
+		subtitle: 'Bar',
 	});
 
-	delete ret[1].env.alfred_workflow_cache;
-	delete ret[1].env.alfred_workflow_data;
+	delete returnValue[1].env.alfred_workflow_cache;
+	delete returnValue[1].env.alfred_workflow_data;
 
-	t.deepEqual(ret[1], {
+	t.deepEqual(returnValue[1], {
 		title: 'Env',
 		env: {
 			alfred_theme_background: 'rgba(0,0,0,1)',
@@ -85,8 +86,8 @@ test('environment variables', async t => {
 			alfred_workflow_version: '0.3.2',
 			alfred_uid: 'alfred-ng2',
 			alfred_workflow_name: 'ng2',
-			alfred_theme: 'foobar'
-		}
+			alfred_theme: 'foobar',
+		},
 	});
 });
 
@@ -97,7 +98,7 @@ test('non-json result', async t => {
 
 	await t.throwsAsync(alfyTest('bar'), {
 		instanceOf: AlfyTestError,
-		message: 'Could not parse result as JSON'
+		message: 'Could not parse result as JSON',
 	});
 });
 
@@ -106,25 +107,25 @@ test('user config', async t => {
 
 	const helloAlfyTest = makeAlfyTest({
 		userConfig: {
-			title: 'hello'
-		}
+			title: 'hello',
+		},
 	});
 
 	t.deepEqual(await helloAlfyTest('foo'), [
 		{
-			title: 'hello'
-		}
+			title: 'hello',
+		},
 	]);
 
 	const worldAlfyTest = makeAlfyTest({
 		userConfig: {
-			title: 'world'
-		}
+			title: 'world',
+		},
 	});
 
 	t.deepEqual(await worldAlfyTest('foo'), [
 		{
-			title: 'world'
-		}
+			title: 'world',
+		},
 	]);
 });

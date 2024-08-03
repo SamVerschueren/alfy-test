@@ -1,5 +1,4 @@
-'use strict';
-const alfy = require('alfy');
+import alfy from 'alfy';
 
 if (alfy.input === 'foo') {
 	alfy.config.set('foo', 'bar');
@@ -8,6 +7,6 @@ if (alfy.input === 'foo') {
 alfy.output([
 	{
 		title: alfy.input,
-		subtitle: alfy.config.get(alfy.input)
-	}
+		subtitle: alfy.config.get(alfy.input),
+	},
 ]);
